@@ -1,0 +1,206 @@
+/* ---------------------------------------------------------------- */
+/* สีสำหรับ Light/Dark Mode (ใช้ CSS Variables) */
+/* ---------------------------------------------------------------- */
+
+/* Light Mode (ค่าเริ่มต้น) */
+:root {
+    --bg-color: #f4f4f9;        /* พื้นหลัง body */
+    --container-bg: white;      /* พื้นหลังกล่องหลัก */
+    --text-color: #333;         /* สีตัวอักษร */
+    --item-bg-color: #e0e0e0;   /* พื้นหลังช่องตาราง */
+    --saved-color: #4CAF50;     /* สีช่องที่เก็บแล้ว (เขียว) */
+    --progress-bg: #ccc;        /* สีพื้นหลัง Progress Bar */
+}
+
+/* Dark Mode: เมื่อ body มี class นี้ */
+.dark-mode {
+    --bg-color: #121212;
+    --container-bg: #1e1e1e;
+    --text-color: #e0e0e0;
+    --item-bg-color: #333;
+    --saved-color: #1a73e8; /* สีช่องที่เก็บแล้ว (น้ำเงิน/ฟ้า) */
+    --progress-bg: #333;
+}
+
+/* ---------------------------------------------------------------- */
+/* จัดรูปแบบหลัก (Base Styles) */
+/* ---------------------------------------------------------------- */
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    
+    /* ใช้ตัวแปรสี */
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.5s, color 0.5s; /* ทำให้การเปลี่ยนโหมดดูนุ่มนวล */
+}
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    
+    /* ใช้ตัวแปรสี */
+    background: var(--container-bg);
+}
+
+/* Title และ Goal */
+
+.container h2 {
+    font-size: 2em;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.header-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    margin-top: 2px;
+}
+.main-title{
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    max-width: 100%;
+}
+/* ปุ่มสลับโหมด */
+.theme-toggle-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    
+    /* ใช้ตัวแปรสี */
+    background-color: var(--item-bg-color);
+    color: var(--text-color);
+}
+
+/* ส่วนสรุปผล */
+.summary {
+    margin: 20px 0;
+    font-size: 1.2em;
+}
+
+/* ตาราง */
+.saving-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 20px;
+}
+
+/* ช่องตัวเลขแต่ละช่อง */
+.saving-item {
+    width: 60px;
+    height: 60px;
+    border: 1px solid var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    position: relative;
+    transition: background-color 0.2s, color 0.2s;
+    
+    /* ใช้ตัวแปรสี */
+    background-color: var(--item-bg-color);
+    color: var(--text-color);
+}
+
+/* เมื่อช่องถูกเก็บแล้ว */
+.saved {
+    background-color: var(--saved-color);
+    color: white;
+}
+
+/* การแสดงเครื่องหมายกากบาท (X) */
+.saved::after {
+    content: 'X';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* แถบความคืบหน้า */
+.progress-bar-container {
+    background-color: var(--progress-bg);
+    border-radius: 10px;
+    margin: 10px 0;
+    overflow: hidden; /* ซ่อนส่วนที่เกินจากขอบโค้ง */
+}
+
+.progress-bar {
+    height: 25px;
+    background-color: var(--saved-color);
+    color: white;
+    text-align: center;
+    line-height: 25px;
+    border-radius: 10px;
+    transition: width 0.5s;
+    min-width: 50px; /* เพื่อให้เห็นเปอร์เซ็นต์เมื่อเริ่มเก็บเงิน */
+}
+
+/* ---------------------------------------------------------------- */
+/* การปรับปรุงสำหรับมือถือ (Responsive Design) */
+/* ---------------------------------------------------------------- */
+
+@media (max-width: 600px) {
+    .main-title {
+        font-size: 0.5em;
+        margin-top: 35px;
+    }
+    .theme-toggle-button {
+        padding: 6px 10px;
+        
+    }
+    .container {
+        padding: 15px;
+        margin: 5px;
+    }
+
+    /* ปรับขนาด Title และ Goal */
+    .container h1 {
+        font-size: 2em; 
+    }
+
+    .container h2 {
+        font-size: 1em; 
+    }
+    
+    /* ปรับขนาดตัวอักษรในส่วน Summary */
+    .summary p {
+        font-size: 1em; 
+    }
+
+    /* ปรับขนาดช่องตารางให้เล็กลง */
+    .saving-item {
+        width: 45px;
+        height: 45px;
+        font-size: 12px;
+    }
+
+    /* ปรับขนาดของกากบาท (X) */
+    .saved::after {
+        font-size: 20px;
+    }
+
+    /* ปรับระยะห่างระหว่างช่อง */
+    .saving-grid {
+        gap: 3px; 
+    }
+}
